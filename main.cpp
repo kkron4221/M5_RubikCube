@@ -1,7 +1,11 @@
 #include <M5Stack.h>
 
 // 現在のサイコロの目を保持する変数（初期値は1）
-int currentDiceValue = 1;
+int currentDiceValue = 0;
+
+int pattern_1_6[4] = {1, 2, 6, 5};
+int pattern_2_5[4] = {2, 5, 3, 4};
+int pattern_3_4[4] = {3, 1, 4, 6};
 
 /**
  * @brief 画面中央に現在のサイコロの目を大きな数字で表示する関数
@@ -13,12 +17,15 @@ void displayDiceValue() {
   
   // 画面中央に数字を描画 (drawCentreStringを使用)
   // X座標: 画面幅の半分, Y座標: 画面高さの半分から少し上に調整
-  M5.Lcd.drawCentreString(
-    String(currentDiceValue), 
-    M5.Lcd.width() / 2, 
-    M5.Lcd.height() / 2 - 20, 
-    7 // フォント番号 (setTextSizeの値と一致させる)
-  );
+  // M5.Lcd.drawCentreString(
+  //   String(pattern_1_6[currentDiceValue]), 
+  //   M5.Lcd.width() / 2, 
+  //   M5.Lcd.height() / 2 - 20, 
+  //   7 // フォント番号 (setTextSizeの値と一致させる)
+  // );
+  M5.Lcd.fillScreen(WHITE);
+  M5.Lcd.fillCircle(160, 120, 30, RED);
+
 }
 
 /**
@@ -30,12 +37,12 @@ void changeDiceValue(int changeType) {
     // Aボタン（左回転）: 目を1つ減らす（1 -> 6, 2 -> 1, ...）
     currentDiceValue--;
     if (currentDiceValue < 1) {
-      currentDiceValue = 6;
+      currentDiceValue = 4;
     }
   } else if (changeType == 1) {
     // Cボタン（右回転）: 目を1つ増やす（1 -> 2, 6 -> 1, ...）
     currentDiceValue++;
-    if (currentDiceValue > 6) {
+    if (currentDiceValue > 4) {
       currentDiceValue = 1;
     }
   } else if (changeType == 2) {
