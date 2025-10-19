@@ -11,9 +11,6 @@ int pattern_3_4[4] = {3, 1, 4, 6};
  * @brief 画面中央に現在のサイコロの目を大きな数字で表示する関数
  */
 void displayDiceValue() {
-  M5.Lcd.fillScreen(BLACK); // 画面を黒でクリア
-  M5.Lcd.setTextColor(WHITE, BLACK); // 文字色を白、背景色を黒に設定
-  M5.Lcd.setTextSize(7); // 大きなフォントサイズに設定
   
   // 画面中央に数字を描画 (drawCentreStringを使用)
   // X座標: 画面幅の半分, Y座標: 画面高さの半分から少し上に調整
@@ -23,8 +20,6 @@ void displayDiceValue() {
   //   M5.Lcd.height() / 2 - 20, 
   //   7 // フォント番号 (setTextSizeの値と一致させる)
   // );
-  M5.Lcd.fillScreen(WHITE);
-  M5.Lcd.fillCircle(160, 120, 30, RED);
 
 }
 
@@ -33,26 +28,38 @@ void displayDiceValue() {
  * @param changeType -1:左回転(デクリメント), 1:右回転(インクリメント), 2:前後回転(特定の加算)
  */
 void changeDiceValue(int changeType) {
+  M5.Lcd.fillScreen(BLACK); 
+
   if (changeType == -1) {
-    // Aボタン（左回転）: 目を1つ減らす（1 -> 6, 2 -> 1, ...）
-    currentDiceValue--;
-    if (currentDiceValue < 1) {
-      currentDiceValue = 4;
-    }
+    // // Aボタン（左回転）: 目を1つ減らす（1 -> 6, 2 -> 1, ...）
+    // currentDiceValue--;
+    // if (currentDiceValue < 1) {
+    //   currentDiceValue = 4;
+    // }
+    M5.Lcd.fillScreen(WHITE);
+    M5.Lcd.fillCircle(100, 50, 30, BLACK);
+    M5.Lcd.fillCircle(100, 190, 30, BLACK);    
+    M5.Lcd.fillCircle(160, 120, 30, BLACK);
+    M5.Lcd.fillCircle(220, 50, 30, BLACK);
+    M5.Lcd.fillCircle(220, 190, 30, BLACK);
   } else if (changeType == 1) {
-    // Cボタン（右回転）: 目を1つ増やす（1 -> 2, 6 -> 1, ...）
-    currentDiceValue++;
-    if (currentDiceValue > 4) {
-      currentDiceValue = 1;
-    }
+    // // Cボタン（右回転）: 目を1つ増やす（1 -> 2, 6 -> 1, ...）
+    // currentDiceValue++;
+    // if (currentDiceValue > 4) {
+    //   currentDiceValue = 1;
+    // }
+    M5.Lcd.fillScreen(WHITE);
+    M5.Lcd.fillCircle(100, 50, 30, BLACK);
+    M5.Lcd.fillCircle(220, 50, 30, BLACK);
+    M5.Lcd.fillCircle(100, 120, 30, BLACK);
+    M5.Lcd.fillCircle(220, 120, 30, BLACK);
+    M5.Lcd.fillCircle(100, 190, 30, BLACK);
+    M5.Lcd.fillCircle(220, 190, 30, BLACK);
+
   } else if (changeType == 2) {
     // Bボタン（前後回転）: 現在の目に応じて、向かい合う目に切り替える
     // (1と6, 2と5, 3と4 は向かい合う) -> 7から現在の目を引くと向かい合う目になる
-    currentDiceValue = 7 - currentDiceValue;
   }
-  
-  // 新しい目を表示
-  displayDiceValue();
 }
 
 
@@ -64,10 +71,9 @@ void setup() {
   M5.Lcd.setRotation(1); 
   
   // 最初の目（1）を表示
-  displayDiceValue();
-  
-  // Bボタンの動作を変更: 長押しでなく、単押しでの反応を検知する設定
-  // M5.BtnB.setDebounce(50); 
+  M5.Lcd.fillScreen(BLACK);
+
+
 }
 
 void loop() {
