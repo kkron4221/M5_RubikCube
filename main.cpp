@@ -5,7 +5,6 @@ float accY = 0.0;
 float accZ = 0.0;
 int count = 0;
 const float THRESHOLD_VALUE = 0.5; 
-bool isCounting = false; 
 
 void diceResult(int count) {
   if (count == 1) {
@@ -65,12 +64,14 @@ void loop() {
   // 1. 加速度データの読み取り
   M5.IMU.getAccelData(&accX, &accY, &accZ);
   
-  if (accX > THRESHOLD_VALUE && !isCounting) {
+  if (accX > THRESHOLD_VALUE) {
     count++;
     diceResult(count);
-    isCounting = true;
-  }else if (abs(accX) < 0.1) { 
-    isCounting = false;
+  } else if (accX < THRESHOLD_VALUE) {
+    if (count > 1){
+      count--;
+      diceResult(count);
+    }
   }
   delay(100);
 }
